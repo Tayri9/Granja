@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     GameObject canvasInterfaz, canvasCamara, canvasCrear, gridInterfaz, gridCrear, camara;
 
     bool movimiento = false;
-    Vector3 posIni;
+    Vector3 oldPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -79,20 +79,15 @@ public class GameManager : MonoBehaviour
 
     public void MoverCamara()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            posIni = Input.mousePosition;
-            movimiento = true;
+            Vector3 deltaPos = oldPosition - Input.mousePosition;
+
+            camara.transform.position += new Vector3(deltaPos.y, 0.0f, deltaPos.x);
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            movimiento = false;
-        }
-
-        if (movimiento)
-        {
-            camara.transform.Translate(Input.mousePosition);
-        }
+        oldPosition = Input.mousePosition;
+        
+        
     }
 }
